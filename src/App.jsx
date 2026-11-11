@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import CustomCursor from './components/CustomCursor'
 import PageTransition from './components/PageTransition'
 import LazyLoader from './components/LazyLoader'
+import EasterEgg from './components/EasterEgg'
 
 // ── Lazy page imports ──────────────────────────────────────────────
 const Home          = lazy(() => import('./pages/Home'))
@@ -46,6 +47,7 @@ export default function App() {
       </PageTransition>
 
       <Footer />
+      <EasterEgg />
     </>
   )
 }

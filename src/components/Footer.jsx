@@ -14,7 +14,7 @@ export default function Footer() {
         {/* Left — wordmark + tagline */}
         <div className="flex flex-col gap-1">
           <span className="font-display text-lg font-bold text-text">
-            Wolf
+            {IDENTITY.name.split(' ')[0]}
             <span className="ml-1 inline-block h-1.5 w-1.5 rounded-full bg-aiml align-middle" />
           </span>
           <span className="font-mono text-2xs text-muted uppercase tracking-widest">
@@ -61,9 +61,15 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="container-grid border-t border-border py-4">
+      {/* Bottom bar — copyright + easter egg hint */}
+      <div className="container-grid border-t border-border py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1">
         <p className="font-mono text-2xs text-muted">
-          © {year} Wolf (Ish-code1). Built with React, Three.js & GSAP.
+          &copy; {year} {IDENTITY.name} ({IDENTITY.github}). Built with React, Three.js &amp; GSAP.
+        </p>
+        <p className="font-mono text-2xs text-border select-none">
+          press{' '}
+          <kbd className="border border-border rounded px-1 py-px text-muted font-mono">G</kbd>
+          {' '}for a surprise
         </p>
       </div>
     </footer>

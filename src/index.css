@@ -91,6 +91,52 @@ html.lenis { height: auto; }
   }
 }
 
+/* ── Photo frame ─────────────────────────────────────────────── */
+.photo-duotone {
+  background: linear-gradient(135deg, #00e5ff44 0%, #a855f744 100%);
+  opacity: 0.55;
+  transition: opacity 0.5s ease;
+}
+.photo-duotone:hover,
+.group:hover .photo-duotone {
+  opacity: 0;
+}
+
+/* Corner brackets on photo frame */
+.corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: rgba(0,229,255,0.5);
+}
+
+/* Particle halo — 8 dots evenly spaced on a circle, CSS only */
+.particle-dot {
+  position: absolute;
+  top: calc(50% - 2.5px);
+  left: calc(50% - 2.5px);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #00e5ff;
+  opacity: 0.55;
+  animation: orbit-dot 6s linear infinite;
+  animation-delay: var(--delay, 0s);
+  /* rotate around the frame center */
+  transform-origin: calc(-1 * var(--r, 140px)) 2.5px;
+  transform: rotate(var(--angle, 0deg)) translateX(var(--r, 140px));
+}
+
+@keyframes orbit-dot {
+  to { transform: rotate(calc(var(--angle, 0deg) + 360deg)) translateX(var(--r, 140px)); }
+}
+
+/* ── Communication page — soundwave bar animation ───────────── */
+@keyframes soundpulse {
+  from { transform: scaleY(0.25); opacity: 0.35; }
+  to   { transform: scaleY(1);    opacity: 0.85; }
+}
+
 /* ── Reduced motion ──────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,

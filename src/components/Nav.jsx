@@ -39,10 +39,10 @@ export default function Nav() {
         {/* Logo / wordmark */}
         <NavLink
           to="/"
-          aria-label="Wolf — home"
+          aria-label={`${IDENTITY.name} — home`}
           className="font-display text-xl font-bold tracking-tight text-text hover:text-[var(--accent)] transition-colors duration-200"
         >
-          Wolf
+          {IDENTITY.name.split(' ')[0]}
           <span className="ml-1 inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)] align-middle" />
         </NavLink>
 

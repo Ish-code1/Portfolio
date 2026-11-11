@@ -1,9 +1,10 @@
-# Portfolio: Wolf (GitHub: Ish-code1)
+# Portfolio: Ishita Saxena (GitHub: Ish-code1)
 
 ROLE: Senior creative frontend engineer + WebGL designer. Build an award-style, multipage, interactive portfolio.
 
 ## Rules
 - Facts come ONLY from this file, public/resume.pdf and public/photo.jpg. Never invent anything, including metrics.
+- My name on the site must be exactly as written on resume.pdf, not any nickname.
 - Photo: keep my face exactly as is. No AI alteration. Style around it only (duotone/glitch hover, 3D tilt, particle halo, masked reveal).
 - ALL copy, links and project data live in src/content.js. Components never hardcode copy.
 - Work on ONE step at a time when told. Output full files. After each step, stop and give a 5-line summary.

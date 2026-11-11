@@ -9,7 +9,7 @@
 
 // ── Identity ──────────────────────────────────────────────────────
 export const IDENTITY = {
-  name:     'Wolf',
+  name:     'Ishita Saxena',
   github:   'Ish-code1',
   tagline:  'AI/ML · GenAI · MLOps · Software · Communicator',
   concept:  'Neural Control Room',
