@@ -20,6 +20,12 @@ html.custom-cursor-active * {
   cursor: none !important;
 }
 
+/* But always show the native cursor inside the EasterEgg overlay dialog */
+html.custom-cursor-active [role="dialog"],
+html.custom-cursor-active [role="dialog"] * {
+  cursor: auto !important;
+}
+
 body {
   margin: 0;
   background: #080b12;

@@ -37,17 +37,20 @@ export default function CustomCursor() {
     tick()
     window.addEventListener('pointermove', onMove)
 
-    // Expand ring on hoverable elements
-    const grow   = () => ring.classList.add('scale-[2.5]', 'opacity-50')
-    const shrink = () => ring.classList.remove('scale-[2.5]', 'opacity-50')
-    document.querySelectorAll('a, button, [role="button"], [data-magnetic]').forEach(el => {
-      el.addEventListener('mouseenter', grow)
-      el.addEventListener('mouseleave', shrink)
-    })
+    // Expand ring on hoverable elements dynamically
+    const onOver = (e) => {
+      if (e.target && e.target.closest('a, button, [role="button"], [data-magnetic]')) {
+        ring.classList.add('scale-[2.5]', 'opacity-50')
+      } else {
+        ring.classList.remove('scale-[2.5]', 'opacity-50')
+      }
+    }
+    window.addEventListener('mouseover', onOver)
 
     return () => {
       cancelAnimationFrame(raf)
       window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('mouseover', onOver)
       document.documentElement.classList.remove('custom-cursor-active')
     }
   }, [reduced])
@@ -60,13 +63,13 @@ export default function CustomCursor() {
       <div
         ref={dotRef}
         aria-hidden="true"
-        className="pointer-events-none fixed left-0 top-0 z-[9999] h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-aiml will-change-transform"
+        className="pointer-events-none fixed left-0 top-0 z-[100002] h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-aiml will-change-transform"
       />
       {/* Ring */}
       <div
         ref={ringRef}
         aria-hidden="true"
-        className="pointer-events-none fixed left-0 top-0 z-[9998] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-aiml/60 transition-transform duration-200 will-change-transform"
+        className="pointer-events-none fixed left-0 top-0 z-[100001] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-aiml/60 transition-transform duration-200 will-change-transform"
       />
     </>
   )

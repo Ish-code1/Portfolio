@@ -22,12 +22,27 @@ const COLOR = DOMAIN_COLORS.comms  // #f59e0b (amber)
 // ── Role cards data ──────────────────────────────────────────────
 const ROLE_CARDS = [
   {
-    icon: '🎙️',
+    icon: '📣',
+    title: 'PR Head \u2014 Kriva ML Society',
+    body:  'Led public relations strategy, outreach, and communications for the college ML society.',
+  },
+  {
+    icon: '🌐',
+    title: 'Campus Ambassador \u2014 KIET',
+    body:  'Represented KIET at external events; built inter-campus networks and drove participation.',
+  },
+  {
+    icon: '🏛\uFE0F',
+    title: 'Dept of PR & International Relations',
+    body:  'Facilitated international liaison work and cross-cultural academic communication.',
+  },
+  {
+    icon: '🎙\uFE0F',
     title: 'Public Speaking & Event Anchoring',
     body:  'Anchored and managed logistics for International Education Awareness Week.',
   },
   {
-    icon: '🧑‍💻',
+    icon: '🧑\u200D💻',
     title: 'Technical Presentations',
     body:  'Presenting AI/ML research, project demos, and deep-dive technical walkthroughs to mixed audiences.',
   },
@@ -35,21 +50,6 @@ const ROLE_CARDS = [
     icon: '🤝',
     title: 'Mentoring',
     body:  'Guiding peers through AI fundamentals, project scoping, and practical ML workflows as an E-Booster Mentor.',
-  },
-  {
-    icon: '📣',
-    title: 'PR Head — Kriva ML Society',
-    body:  'Led public relations strategy, outreach, and communications for the college ML society.',
-  },
-  {
-    icon: '🌐',
-    title: 'Campus Ambassador — KIET',
-    body:  'Represented KIET at external events; built inter-campus networks and drove participation.',
-  },
-  {
-    icon: '🏛️',
-    title: 'Dept of PR & International Relations',
-    body:  'Facilitated international liaison work and cross-cultural academic communication.',
   },
 ]
 
@@ -104,7 +104,7 @@ export default function Communication() {
 
       {/* ══════ 1. HERO — stage + soundwave scene ══════════════════ */}
       <DomainHero
-        label="Domain / Communication & Leadership"
+        label="Domain / Communication &amp; Leadership"
         heading={d.label}
         tagline={d.tagline}
         color={COLOR}
@@ -124,7 +124,7 @@ export default function Communication() {
         <div className="container-grid">
           <div className="flex flex-col sm:flex-row sm:items-center gap-6">
             <div className="flex flex-col gap-1 flex-1">
-              <p className="section-label" style={{ color: COLOR }}>On stage & off</p>
+              <p className="section-label" style={{ color: COLOR }}>On stage &amp; off</p>
               <p className="font-body text-muted text-sm sm:text-base leading-relaxed max-w-xl">
                 From keynote stages to mentorship sessions — bridging technical depth with
                 the clarity that makes ideas land.
@@ -137,38 +137,7 @@ export default function Communication() {
         </div>
       </div>
 
-      {/* ══════ 3. LEADERSHIP ROLES GRID ═══════════════════════════ */}
-      <section aria-labelledby="roles-heading" className="py-20 border-t border-border relative overflow-hidden">
-        {/* Warm ambient glow */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: `radial-gradient(ellipse at 50% 0%, ${COLOR}10, transparent 60%)` }}
-          aria-hidden="true"
-        />
-
-        <div className="container-grid relative z-10">
-          <div className="mb-10 flex flex-col gap-3">
-            <p className="section-label" style={{ color: COLOR }}>Roles & Responsibilities</p>
-            <SpotlightHeading color={COLOR}>Leadership in action</SpotlightHeading>
-            <WaveDivider color={COLOR} />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {ROLE_CARDS.map((card, i) => (
-              <RoleCard
-                key={card.title}
-                icon={card.icon}
-                title={card.title}
-                body={card.body}
-                color={COLOR}
-                index={i}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══════ 4. AI GENERALIST — MODEL EVALUATION ════════════════ */}
+      {/* ══════ 3. AI GENERALIST — MODEL EVALUATION ════════════════ */}
       <section aria-labelledby="ai-generalist-heading" className="py-20 border-t border-border relative overflow-hidden">
         {/* Spotlight cone effect */}
         <div
@@ -190,7 +159,7 @@ export default function Communication() {
             <div className="flex flex-col gap-3 text-center">
               <p className="section-label" style={{ color: COLOR }}>AI Generalist</p>
               <SpotlightHeading color={COLOR}>{d.aiGeneralist.title}</SpotlightHeading>
-              <p className="font-body text-muted text-sm sm:text-base leading-relaxed">
+              <p className="font-body text-sm sm:text-base leading-relaxed" style={{ color: '#ffffff' }}>
                 Evaluating AI model outputs across multiple dimensions — ensuring responses
                 are grounded, reasoned and reliable.
               </p>
@@ -242,6 +211,37 @@ export default function Communication() {
         </div>
       </section>
 
+      {/* ══════ 4. LEADERSHIP ROLES GRID ═══════════════════════════ */}
+      <section aria-labelledby="roles-heading" className="py-20 border-t border-border relative overflow-hidden">
+        {/* Warm ambient glow */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: `radial-gradient(ellipse at 50% 0%, ${COLOR}10, transparent 60%)` }}
+          aria-hidden="true"
+        />
+
+        <div className="container-grid relative z-10">
+          <div className="mb-10 flex flex-col gap-3">
+            <p className="section-label" style={{ color: COLOR }}>Roles &amp; Responsibilities</p>
+            <SpotlightHeading color={COLOR}>Leadership in action</SpotlightHeading>
+            <WaveDivider color={COLOR} />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {ROLE_CARDS.map((card, i) => (
+              <RoleCard
+                key={card.title}
+                icon={card.icon}
+                title={card.title}
+                body={card.body}
+                color={COLOR}
+                index={i}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ══════ 5. HACKATHONS ══════════════════════════════════════ */}
       <section aria-labelledby="hackathons-heading" className="py-20 border-t border-border relative overflow-hidden">
         {/* Stage floor glow */}
@@ -265,8 +265,8 @@ export default function Communication() {
             {[
               { value: '4', label: 'Hackathons entered' },
               { value: 'Top 6', label: 'Best placement' },
-              { value: 'Top 50', label: 'Worldwide (Namespace \'26)' },
-              { value: '3×', label: 'Podium / finalist' },
+              { value: 'Top 50', label: "Worldwide (Namespace '26)" },
+              { value: '3\u00d7', label: 'Podium / finalist' },
             ].map(stat => (
               <div key={stat.label} className="flex flex-col gap-0.5">
                 <span
@@ -317,7 +317,7 @@ export default function Communication() {
       <div className="border-t border-border py-8">
         <div className="container-grid flex items-center justify-between flex-wrap gap-4">
           <span className="font-mono text-xs text-muted">
-            Communication &amp; Leadership ·{' '}
+            Communication &amp; Leadership &middot;{' '}
             <span style={{ color: COLOR }}>Ishita Saxena</span>
           </span>
           <div className="flex gap-6">

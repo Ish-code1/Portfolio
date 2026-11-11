@@ -12,13 +12,13 @@ export const IDENTITY = {
   name:     'Ishita Saxena',
   fullName: 'Ishita Saxena',       // exact as on resume — use this everywhere
   github:   'Ish-code1',
-  tagline:  'AI/ML · GenAI · MLOps · Software · Communicator',
+  tagline:  'AI/ML · GenAI · MLOps · Software · Speaker',
   concept:  'Neural Control Room',
   photo:    '/photo.jpg',
   resume:   '/resume.pdf',
   githubUrl:'https://github.com/Ish-code1',
-  linkedin: 'https://linkedin.com/in/placeholder',   // placeholder
-  email:    'hello@placeholder.dev',                  // placeholder
+  linkedin: 'https://www.linkedin.com/in/ishita-saxena5/',
+  email:    'ishitasaxena.work@gmail.com',
 }
 
 // ── Domain accent palette (mirrors tailwind.config.js) ───────────
@@ -255,13 +255,14 @@ export const COUNTERS = [
 
 // ── Home page copy ────────────────────────────────────────────────
 export const HOME = {
-  heroHeading:  'Neural Control Room',
-  heroSubhead:  'AI/ML · GenAI · MLOps · Software · Communication',
-  heroCta:      'Enter the Grid',
-  featuredLabel:'Featured Projects',
-  hackathonsLabel: 'Competition Record',
-  ctaHeading:   "Let's build something that thinks.",
-  ctaButton:    'Get in touch',
+  heroHeading:      'Neural Control Room',
+  heroSubhead:      'AI/ML · GenAI · MLOps · Software · Communication',
+  heroCta:          'Enter the Grid',
+  heroSecondaryCta: 'Open Channel →',
+  featuredLabel:    'Featured Projects',
+  hackathonsLabel:  'Competition Record',
+  ctaHeading:       "Let's build something that thinks.",
+  ctaButton:        'Get in touch',
 }
 
 // ── Contact page ──────────────────────────────────────────────────

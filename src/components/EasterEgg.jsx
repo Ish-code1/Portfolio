@@ -170,7 +170,7 @@ export default function EasterEgg() {
       aria-modal="true"
       aria-label="Easter egg: hand landmark visualiser"
       className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
-      style={{ background: 'rgba(8,11,18,0.88)', backdropFilter: 'blur(8px)', cursor: 'auto' }}
+      style={{ background: 'rgba(8,11,18,0.88)', backdropFilter: 'blur(8px)' }}
       onClick={e => { if (e.target === e.currentTarget) dismiss() }}
     >
       <div

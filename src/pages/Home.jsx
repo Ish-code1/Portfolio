@@ -151,14 +151,13 @@ export default function Home() {
               >
                 {HOME.heroCta}
               </Link>
-              <a
-                href={IDENTITY.resume}
-                download
+              <Link
+                to="/contact"
                 data-magnetic
                 className="btn-magnetic text-text border-border hover:border-text font-display text-sm backdrop-blur-sm bg-base/40"
               >
-                Résumé ↓
-              </a>
+                {HOME.heroSecondaryCta}
+              </Link>
             </div>
           </div>
 

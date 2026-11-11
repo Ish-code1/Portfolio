@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { CONTACT, IDENTITY } from '../content'
 import { useReducedMotion } from '../hooks/useReducedMotion'
@@ -79,6 +79,67 @@ function SocialCard({ href, icon, label, handle, accent, external = true }) {
   )
 }
 
+/* ── Email card with instant copy + web compose fallback ─────────── */
+function EmailCard({ email, accent }) {
+  const [copied, setCopied] = useState(false)
+
+  const handleClick = (e) => {
+    // 1. Copy email address to clipboard
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(email)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    }
+
+    // 2. Open Gmail web compose in a new tab (reliable on systems without desktop mail clients)
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank', 'noopener,noreferrer')
+  }
+
+  return (
+    <a
+      href={`mailto:${email}`}
+      onClick={handleClick}
+      aria-label={`Email: ${email} (Click to open compose and copy)`}
+      className="group relative flex items-center gap-4 rounded-sm border border-border bg-surface/60
+                 px-5 py-4 hover:border-current transition-colors duration-300 focus-visible:outline-2
+                 min-w-0 cursor-pointer"
+      onMouseEnter={e => {
+        e.currentTarget.style.borderColor = accent
+        e.currentTarget.style.color = accent
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.borderColor = ''
+        e.currentTarget.style.color = ''
+      }}
+    >
+      {/* Glow blob */}
+      <span
+        className="pointer-events-none absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ background: `radial-gradient(ellipse at 20% 50%, ${accent}1a 0%, transparent 70%)` }}
+        aria-hidden="true"
+      />
+      <span className="relative z-10 flex-shrink-0 text-current"><IconEmail /></span>
+      <span className="relative z-10 flex flex-col min-w-0 flex-1">
+        <span className="flex items-center justify-between gap-1">
+          <span className="font-mono text-xs uppercase tracking-widest text-muted">Email</span>
+          {copied ? (
+            <span className="font-mono text-[10px] text-mlops font-semibold tracking-wider">
+              Copied! ✓
+            </span>
+          ) : (
+            <span className="font-mono text-[10px] text-muted/70 group-hover:text-current transition-colors">
+              Open ↗
+            </span>
+          )}
+        </span>
+        <span className="font-display text-sm font-medium text-text group-hover:text-current transition-colors duration-200 truncate">
+          {copied ? 'Copied to clipboard' : email}
+        </span>
+      </span>
+    </a>
+  )
+}
+
 /* ── Main page ───────────────────────────────────────────────────── */
 export default function Contact() {
   const reduced   = useReducedMotion()
@@ -145,7 +206,7 @@ export default function Contact() {
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-text leading-tight">
             {CONTACT.heading}
           </h1>
-          <p className="text-slate-300 text-sm sm:text-base max-w-xs sm:max-w-md leading-relaxed">
+          <p className="text-sm sm:text-base max-w-xs sm:max-w-md leading-relaxed" style={{ color: "#ffffff" }}>
             {CONTACT.subheading}
           </p>
         </div>
@@ -193,16 +254,12 @@ export default function Contact() {
             href={CONTACT.linkedin}
             icon={<IconLinkedIn />}
             label="LinkedIn"
-            handle="Ishita Saxena"
+            handle="in/ishita-saxena5"
             accent="#a855f7"
           />
-          <SocialCard
-            href={`mailto:${CONTACT.email}`}
-            icon={<IconEmail />}
-            label="Email"
-            handle={CONTACT.email}
+          <EmailCard
+            email={CONTACT.email}
             accent="#f59e0b"
-            external={false}
           />
         </div>
 
