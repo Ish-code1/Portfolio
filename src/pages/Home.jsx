@@ -133,7 +133,7 @@ export default function Home() {
           <div className="flex flex-col items-start gap-4 max-w-xl pointer-events-auto">
 
             {/* Name */}
-            <h1 className="font-display font-bold leading-none text-5xl sm:text-6xl md:text-7xl xl:text-8xl text-text drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
+            <h1 className="font-display font-bold leading-none text-4xl sm:text-6xl md:text-7xl xl:text-8xl text-text drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
               <SplitText text={IDENTITY.fullName} mode="words" delay={0.2} stagger={0.08} />
             </h1>
 
@@ -190,7 +190,7 @@ export default function Home() {
       {/* ══════ 3. STATS / COUNTERS ═══════════════════════════════ */}
       <section aria-label="Key metrics" className="py-12 border-y border-border bg-surface/30">
         <div className="container-grid">
-          <dl className="grid grid-cols-2 sm:grid-cols-4 gap-8">
+          <dl className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8">
             {[
               { label: 'Backend tests (FinSight)',    value: 86,  suffix: '' },
               { label: 'Playwright tests',            value: 13,  suffix: '' },

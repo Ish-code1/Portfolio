@@ -211,19 +211,35 @@ export default function PointCloudPortrait() {
           E[y*iw+x] = Math.min(1, Math.hypot(gx, gy) * 0.9)
         }
 
-      const thr = 20, eb = 0.65
+      const thr = 25, eb = 0.65
       const idx = [], cum = []
       let total = 0
-      for (let y = 0; y < ih; y++)
+      for (let y = 0; y < ih; y++) {
+        const ny = (y / ih - 0.5) * 2
         for (let x = 0; x < iw; x++) {
           const i = y*iw + x
           if (d[i*4+3] <= 40 || L[i] <= thr) continue
-          total += (0.12 + 0.88 * LS[i]) * (1 + eb * 3 * E[i])
+
+          const nx = (x / iw - 0.5) * 2
+          // Elliptical falloff mask: completely eliminates rectangular frame edges
+          const dist = Math.hypot(nx, ny * 1.05)
+          if (dist >= 0.92) continue
+          const falloff = Math.cos((dist / 0.92) * (Math.PI / 2))
+
+          const weight = (LS[i] * 0.9 + 0.1) * (1 + eb * 3 * E[i]) * falloff
+          if (weight <= 0.01) continue
+
+          total += weight
           idx.push(i); cum.push(total)
         }
+      }
       if (!idx.length) return
 
-      const N_POINTS = 62000
+      const isMobile = container.clientWidth < 768
+      // Low, airy density on mobile (14,000 points); smooth fidelity on desktop
+      const N_POINTS = isMobile ? 14000 : 52000
+      uniforms.uSize.value = isMobile ? 1.5 : 2.1
+
       const pos = new Float32Array(N_POINTS*3), st = new Float32Array(N_POINTS*3)
       const col = new Float32Array(N_POINTS*3), rnd = new Float32Array(N_POINTS), lum = new Float32Array(N_POINTS)
 
@@ -232,16 +248,23 @@ export default function PointCloudPortrait() {
       const vh = 2 * Math.tan(fovRad / 2) * camera.position.z
       const vw = vh * camera.aspect
 
-      // Enlarge portrait: bold, close-up crop filling the view
-      const H = vh * 1.88
-      const W = (H * iw) / ih
+      let W, H, xOff, yOff
+      const imgAspect = iw / ih
 
-      // Shift right: cover the black gap on the right and frame face towards center-right
-      const isDesktop = container.clientWidth >= 768
-      const xOff = isDesktop ? Math.max(0.75, vw * 0.18) : vw * 0.04
-
-      // Shift up: keeps eyes at the exact same frame height while enlarging facial features
-      const yOff = vh * 0.08
+      if (isMobile) {
+        // On mobile: organic ambient background layer across the hero
+        // Softly framing the scene without being trapped in an isolated box
+        H = vh * 1.25
+        W = H * imgAspect
+        xOff = 0
+        yOff = vh * 0.04
+      } else {
+        // Desktop: bold close-up crop on the right side, text anchored on left
+        H = vh * 1.55
+        W = H * imgAspect
+        xOff = Math.max(0.65, vw * 0.18)
+        yOff = vh * 0.05
+      }
 
       for (let k = 0; k < N_POINTS; k++) {
         const r = Math.random() * total
@@ -284,6 +307,8 @@ export default function PointCloudPortrait() {
     const sources = [...new Set(candidates.filter(Boolean))]
 
     let attemptIndex = 0
+    let cachedImg = null
+
     function loadNext() {
       if (attemptIndex >= sources.length) {
         console.warn('[PointCloudPortrait] All photo sources failed to load')
@@ -292,7 +317,10 @@ export default function PointCloudPortrait() {
       const candidate = sources[attemptIndex++]
       const testImg = new Image()
       testImg.crossOrigin = 'anonymous'
-      testImg.onload = () => build(testImg)
+      testImg.onload = () => {
+        cachedImg = testImg
+        build(testImg)
+      }
       testImg.onerror = () => {
         // Try next format candidate if this one isn't found
         loadNext()
@@ -302,32 +330,55 @@ export default function PointCloudPortrait() {
     }
     loadNext()
 
-    /* ── Cursor tracking — WINDOW-WIDE ───────────────────────── */
+    /* ── Cursor & Touch tracking — WINDOW-WIDE ───────────────── */
     const mouseN = new THREE.Vector2()
     let active   = false
 
-    const onMove = (e) => {
-      // Map window cursor to canvas NDC via the canvas bounding rect
+    const updateCoord = (clientX, clientY) => {
       const rect = container.getBoundingClientRect()
-      // Clamp NDC so the cursor outside the canvas still drives particles
-      const nx = ((e.clientX - rect.left) / rect.width)  * 2 - 1
-      const ny = -(((e.clientY - rect.top)  / rect.height) * 2 - 1)
+      if (rect.width <= 0 || rect.height <= 0) return
+      const nx = ((clientX - rect.left) / rect.width)  * 2 - 1
+      const ny = -(((clientY - rect.top)  / rect.height) * 2 - 1)
       mouseN.set(nx, ny)
       active = true
     }
-    const onOut = () => { active = false }
 
-    // Listen on the whole window so moving anywhere on the page works
-    window.addEventListener('pointermove', onMove)
-    window.addEventListener('pointerleave', onOut)
+    const onPointerMove = (e) => updateCoord(e.clientX, e.clientY)
+    const onPointerDown = (e) => updateCoord(e.clientX, e.clientY)
+    const onPointerUp   = () => { active = false }
+    const onPointerLeave= () => { active = false }
+
+    const onTouchMove = (e) => {
+      if (e.touches && e.touches[0]) {
+        updateCoord(e.touches[0].clientX, e.touches[0].clientY)
+      }
+    }
+    const onTouchEnd = () => { active = false }
+
+    window.addEventListener('pointermove', onPointerMove)
+    window.addEventListener('pointerdown', onPointerDown)
+    window.addEventListener('pointerup', onPointerUp)
+    window.addEventListener('pointerleave', onPointerLeave)
+    window.addEventListener('touchstart', onTouchMove, { passive: true })
+    window.addEventListener('touchmove', onTouchMove, { passive: true })
+    window.addEventListener('touchend', onTouchEnd, { passive: true })
+    window.addEventListener('touchcancel', onTouchEnd, { passive: true })
 
     /* ── Resize ───────────────────────────────────────────────── */
+    let lastIsMobile = container.clientWidth < 768
     const ro = new ResizeObserver(() => {
       const W = container.clientWidth, H = container.clientHeight
+      if (W === 0 || H === 0) return
       renderer.setSize(W, H)
       camera.aspect = W / H
       camera.position.z = camZ()
       camera.updateProjectionMatrix()
+
+      const currentIsMobile = W < 768
+      if (currentIsMobile !== lastIsMobile && cachedImg) {
+        lastIsMobile = currentIsMobile
+        build(cachedImg)
+      }
     })
     ro.observe(container)
 
@@ -384,8 +435,14 @@ export default function PointCloudPortrait() {
     return () => {
       cancelAnimationFrame(rafId)
       ro.disconnect()
-      window.removeEventListener('pointermove', onMove)
-      window.removeEventListener('pointerleave', onOut)
+      window.removeEventListener('pointermove', onPointerMove)
+      window.removeEventListener('pointerdown', onPointerDown)
+      window.removeEventListener('pointerup', onPointerUp)
+      window.removeEventListener('pointerleave', onPointerLeave)
+      window.removeEventListener('touchstart', onTouchMove)
+      window.removeEventListener('touchmove', onTouchMove)
+      window.removeEventListener('touchend', onTouchEnd)
+      window.removeEventListener('touchcancel', onTouchEnd)
       if (points) { scene.remove(points); points.geometry.dispose() }
       sgeo.dispose()
       material.dispose()

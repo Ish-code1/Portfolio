@@ -14,16 +14,29 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Hide native cursor globally when custom cursor is active */
-html.custom-cursor-active,
-html.custom-cursor-active * {
-  cursor: none !important;
+/* Hide native cursor globally when custom cursor is active ONLY on devices with a mouse/fine pointer */
+@media (hover: hover) and (pointer: fine) {
+  html.custom-cursor-active,
+  html.custom-cursor-active * {
+    cursor: none !important;
+  }
+
+  /* But always show the native cursor inside the EasterEgg overlay dialog */
+  html.custom-cursor-active [role="dialog"],
+  html.custom-cursor-active [role="dialog"] * {
+    cursor: auto !important;
+  }
 }
 
-/* But always show the native cursor inside the EasterEgg overlay dialog */
-html.custom-cursor-active [role="dialog"],
-html.custom-cursor-active [role="dialog"] * {
-  cursor: auto !important;
+/* On touch devices, hide custom cursor elements completely */
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor-element {
+    display: none !important;
+  }
+  html.custom-cursor-active,
+  html.custom-cursor-active * {
+    cursor: auto !important;
+  }
 }
 
 body {

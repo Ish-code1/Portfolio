@@ -99,6 +99,7 @@ export default function Nav() {
                 <NavLink
                   to={href}
                   end={href === '/'}
+                  onClick={() => setOpen(false)}
                   style={({ isActive }) => isActive ? { color } : {}}
                   className="block py-3 font-mono text-xs uppercase tracking-widest text-muted hover:text-text transition-colors"
                 >
