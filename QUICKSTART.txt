@@ -1,0 +1,12 @@
+1. Put photo.jpg and resume.pdf inside the public folder.
+2. Open this whole folder in Antigravity (File > Open Folder).
+3. In the agent chat type:   /step1-scaffold
+   (If slash commands do not appear, open GEMINI.md, copy the text of that step from the .agents/workflows folder and paste it in chat.)
+4. When it finishes, run:
+     npm install
+     npm run dev
+   Open the link it prints (usually http://localhost:5173) and check the site.
+5. Save progress:
+     git add .
+     git commit -m "step 1 done"
+6. Repeat with /step2-home, /step3-ai-ml, /step3-genai, /step3-mlops, /step3-software, /step4-communication, /step5-projects, /step6-polish, /step7-deploy

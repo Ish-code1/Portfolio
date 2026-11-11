@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Reset & base ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --nav-h: 4rem;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide native cursor globally when custom cursor is active */
+html.custom-cursor-active,
+html.custom-cursor-active * {
+  cursor: none !important;
+}
+
+body {
+  margin: 0;
+  background: #080b12;
+  color: #e2e8f0;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Smooth scroll via Lenis ──────────────────────────────────── */
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+/* ── Selection ───────────────────────────────────────────────── */
+::selection {
+  background: rgba(0, 229, 255, 0.25);
+  color: #fff;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #080b12; }
+::-webkit-scrollbar-thumb { background: #1a2235; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #00e5ff44; }
+
+/* ── Focus ring ──────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #00e5ff;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Utility classes ─────────────────────────────────────────── */
+@layer components {
+  .container-grid {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Magnetic button base */
+  .btn-magnetic {
+    @apply relative inline-flex items-center justify-center gap-2
+           rounded-sm border border-current px-6 py-3
+           font-display font-medium tracking-wide
+           transition-colors duration-200;
+  }
+
+  /* Domain chip */
+  .chip {
+    @apply inline-flex items-center rounded-full border px-3 py-1
+           text-xs font-mono uppercase tracking-widest
+           transition-colors duration-200 cursor-pointer;
+  }
+
+  /* Section heading */
+  .section-label {
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-muted;
+  }
+
+  /* Glowing text */
+  .glow {
+    text-shadow: 0 0 24px currentColor;
+  }
+
+  /* Grid background overlay */
+  .bg-neural-grid {
+    background-image: var(--tw-bg-neural-grid, none);
+    background-size: 48px 48px;
+  }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
