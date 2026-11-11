@@ -63,7 +63,7 @@ export default function HackathonRow({ placement, name, scope, team, index = 0 }
 
       {/* Arrow */}
       <div
-        className="flex-shrink-0 text-muted/30 group-hover:text-[var(--color)] transition-colors duration-200"
+        className="flex-shrink-0 text-muted/50 group-hover:text-[var(--color)] transition-colors duration-200"
         style={{ '--color': color }}
         aria-hidden="true"
       >

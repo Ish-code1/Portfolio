@@ -10,10 +10,11 @@
 // ── Identity ──────────────────────────────────────────────────────
 export const IDENTITY = {
   name:     'Ishita Saxena',
+  fullName: 'Ishita Saxena',       // exact as on resume — use this everywhere
   github:   'Ish-code1',
   tagline:  'AI/ML · GenAI · MLOps · Software · Communicator',
   concept:  'Neural Control Room',
-  photo:    '/photo.jpeg',
+  photo:    '/photo.jpg',
   resume:   '/resume.pdf',
   githubUrl:'https://github.com/Ish-code1',
   linkedin: 'https://linkedin.com/in/placeholder',   // placeholder
@@ -31,6 +32,7 @@ export const DOMAIN_COLORS = {
 
 // ── Nav links ─────────────────────────────────────────────────────
 export const NAV_LINKS = [
+  { label: 'Home',          href: '/',              color: '#e2e8f0'              },
   { label: 'AI & ML',       href: '/ai-ml',         color: DOMAIN_COLORS.aiml     },
   { label: 'GenAI',         href: '/genai',          color: DOMAIN_COLORS.genai    },
   { label: 'MLOps',         href: '/mlops',          color: DOMAIN_COLORS.mlops    },

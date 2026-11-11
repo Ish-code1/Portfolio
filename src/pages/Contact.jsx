@@ -141,11 +141,11 @@ export default function Contact() {
 
         {/* ── Header ────────────────────────────────────────────── */}
         <div ref={headerRef} className="pt-16 pb-12 flex flex-col items-center text-center gap-4">
-          <p className="section-label">Get in Touch</p>
+          <p className="section-label !text-slate-200 font-semibold tracking-[0.25em]">Get in Touch</p>
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-text leading-tight">
             {CONTACT.heading}
           </h1>
-          <p className="text-muted text-sm sm:text-base max-w-xs sm:max-w-md leading-relaxed">
+          <p className="text-slate-300 text-sm sm:text-base max-w-xs sm:max-w-md leading-relaxed">
             {CONTACT.subheading}
           </p>
         </div>

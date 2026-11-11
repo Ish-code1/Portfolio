@@ -76,7 +76,7 @@ html.lenis { height: auto; }
 
   /* Section heading */
   .section-label {
-    @apply font-mono text-xs uppercase tracking-[0.2em] text-muted;
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-slate-400;
   }
 
   /* Glowing text */

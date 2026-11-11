@@ -194,7 +194,7 @@ export default function Projects() {
           {/* Empty state */}
           {filtered.length === 0 && (
             <div className="mt-16 flex flex-col items-center gap-3 text-center py-16">
-              <span className="font-mono text-xs text-border">No projects match this filter.</span>
+              <span className="font-mono text-xs text-slate-400">No projects match this filter.</span>
             </div>
           )}
 

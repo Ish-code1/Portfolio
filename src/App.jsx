@@ -1,6 +1,7 @@
-import { lazy, Suspense } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { lazy, Suspense, useEffect } from 'react'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useLenis } from './hooks/useLenis'
+import { IDENTITY } from './content'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import CustomCursor from './components/CustomCursor'
@@ -23,6 +24,10 @@ export default function App() {
   useLenis()
   const location = useLocation()
 
+  useEffect(() => {
+    document.title = `${IDENTITY.fullName} — Neural Control Room`
+  }, [])
+
   return (
     <>
       {/* Global UI chrome */}
@@ -41,7 +46,7 @@ export default function App() {
             <Route path="/communication" element={<Communication />} />
             <Route path="/projects"     element={<Projects />} />
             <Route path="/contact"      element={<Contact />} />
-            <Route path="*"             element={<NotFound />} />
+            <Route path="*"             element={<Navigate to="/" replace />} />
           </Routes>
         </LazyLoader>
       </PageTransition>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import LazyLoader from '../components/LazyLoader'
-import PhotoFrame        from '../components/home/PhotoFrame'
+import PointCloudPortrait from '../components/home/PointCloudPortrait'
 import DomainPortal      from '../components/home/DomainPortal'
 import FeaturedProjectCard from '../components/home/FeaturedProjectCard'
 import HackathonRow      from '../components/home/HackathonRow'
@@ -109,84 +109,63 @@ export default function Home() {
       {/* ══════ 1. HERO ═══════════════════════════════════════════ */}
       <section
         aria-label="Hero"
-        className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden pt-nav"
+        className="relative h-screen w-full overflow-hidden"
       >
-        {/* WebGL neural mesh — lazy, mobile fallback is CSS grid */}
-        {isTouchOrLow || reduced ? (
-          <div
-            className="absolute inset-0 pointer-events-none"
-            aria-hidden="true"
-            style={{
-              backgroundImage:
-                'linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px)',
-              backgroundSize: '48px 48px',
-            }}
-          />
-        ) : (
-          <LazyLoader>
-            <NeuralMesh />
-          </LazyLoader>
-        )}
+        {/* Point cloud portrait — absolute background layer */}
+        <PointCloudPortrait />
 
         {/* Radial vignette */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none z-[1]"
           aria-hidden="true"
           style={{
             background:
-              'radial-gradient(ellipse at 50% 50%, transparent 40%, #080b12 90%)',
+              'radial-gradient(ellipse at 50% 50%, transparent 45%, #080b12 92%)',
           }}
         />
 
-        {/* Hero content */}
+        {/* Hero content — left-aligned, anchored to lower-left */}
         <div
           ref={heroTextRef}
-          className="container-grid relative z-10 flex flex-col items-center gap-8 text-center"
+          className="container-grid relative z-10 flex h-full flex-col justify-end pb-12 sm:pb-14 md:pb-16 pointer-events-none"
           style={{ opacity: reduced ? 1 : 0 }}
         >
-          {/* Photo + identity */}
-          <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10 md:text-left">
-            <PhotoFrame />
+          <div className="flex flex-col items-start gap-4 max-w-xl pointer-events-auto">
 
-            <div className="flex flex-col items-center gap-4 md:items-start">
-              {/* Label */}
-              <p className="section-label tracking-[0.25em]">Neural Control Room</p>
+            {/* Name */}
+            <h1 className="font-display font-bold leading-none text-5xl sm:text-6xl md:text-7xl xl:text-8xl text-text drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
+              <SplitText text={IDENTITY.fullName} mode="words" delay={0.2} stagger={0.08} />
+            </h1>
 
-              {/* Name */}
-              <h1 className="font-display font-bold leading-none text-5xl sm:text-6xl md:text-7xl xl:text-8xl text-text">
-                <SplitText text={IDENTITY.name} mode="words" delay={0.2} stagger={0.08} />
-              </h1>
+            {/* Tagline */}
+            <p className="font-mono text-xs sm:text-sm text-slate-200 leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
+              {IDENTITY.tagline}
+            </p>
 
-              {/* Tagline */}
-              <p className="font-mono text-xs sm:text-sm text-muted max-w-xs md:max-w-sm leading-relaxed">
-                {IDENTITY.tagline}
-              </p>
-
-              {/* CTA buttons */}
-              <div className="flex flex-wrap gap-3 mt-2">
-                <Link
-                  to="/projects"
-                  data-magnetic
-                  className="btn-magnetic text-aiml border-aiml/40 hover:bg-aiml/10 font-display text-sm"
-                >
-                  {HOME.heroCta}
-                </Link>
-                <a
-                  href={IDENTITY.resume}
-                  download
-                  data-magnetic
-                  className="btn-magnetic text-text border-border hover:border-text font-display text-sm"
-                >
-                  Résumé ↓
-                </a>
-              </div>
+            {/* CTA buttons */}
+            <div className="flex flex-wrap gap-3 mt-1">
+              <Link
+                to="/projects"
+                data-magnetic
+                className="btn-magnetic text-aiml border-aiml/40 hover:bg-aiml/10 font-display text-sm backdrop-blur-sm bg-base/40"
+              >
+                {HOME.heroCta}
+              </Link>
+              <a
+                href={IDENTITY.resume}
+                download
+                data-magnetic
+                className="btn-magnetic text-text border-border hover:border-text font-display text-sm backdrop-blur-sm bg-base/40"
+              >
+                Résumé ↓
+              </a>
             </div>
           </div>
 
           {/* Scroll hint */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40" aria-hidden="true">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-40 pointer-events-none" aria-hidden="true">
             <span className="font-mono text-2xs uppercase tracking-widest text-muted">Scroll</span>
-            <div className="h-8 w-px bg-gradient-to-b from-aiml to-transparent animate-pulse" />
+            <div className="h-6 w-px bg-gradient-to-b from-aiml to-transparent animate-pulse" />
           </div>
         </div>
       </section>
@@ -347,7 +326,7 @@ export default function Home() {
               <Link
                 to="/contact"
                 data-magnetic
-                className="btn-magnetic text-aiml border-aiml/50 hover:bg-aiml/10 font-display px-8 py-4 text-base"
+                className="btn-magnetic text-white bg-white/10 border-white/60 hover:bg-white/20 hover:border-white font-display px-8 py-4 text-base font-semibold tracking-wide shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-200"
               >
                 {HOME.ctaButton}
               </Link>
@@ -356,7 +335,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-magnetic
-                className="btn-magnetic text-text border-border hover:border-text font-display px-8 py-4 text-base"
+                className="btn-magnetic text-slate-200 border-border hover:border-text font-display px-8 py-4 text-base"
               >
                 GitHub ↗
               </a>

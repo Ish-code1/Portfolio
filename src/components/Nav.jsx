@@ -5,7 +5,8 @@ import { NAV_LINKS, IDENTITY } from '../content'
 /**
  * Nav — sticky top nav.
  * Active domain link shifts the accent colour via CSS custom property.
- * Collapses to hamburger on mobile.
+ * "Home" is the first nav item (exact match). Logo also links to "/".
+ * Full name shown in logo, pulled from IDENTITY.fullName.
  */
 export default function Nav() {
   const location = useLocation()
@@ -13,8 +14,10 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const navRef = useRef(null)
 
-  // Detect active domain accent
-  const activeLink = NAV_LINKS.find(l => l.href !== '/' && location.pathname.startsWith(l.href))
+  // Detect active domain accent (skip Home "/" — it matches everything)
+  const activeLink = NAV_LINKS.find(l =>
+    l.href !== '/' && location.pathname.startsWith(l.href)
+  )
   const accentColor = activeLink?.color ?? '#00e5ff'
 
   useEffect(() => {
@@ -36,15 +39,21 @@ export default function Nav() {
       }`}
     >
       <div className="container-grid flex h-full items-center justify-between">
-        {/* Logo / wordmark */}
-        <NavLink
-          to="/"
-          aria-label={`${IDENTITY.name} — home`}
-          className="font-display text-xl font-bold tracking-tight text-text hover:text-[var(--accent)] transition-colors duration-200"
-        >
-          {IDENTITY.name.split(' ')[0]}
-          <span className="ml-1 inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)] align-middle" />
-        </NavLink>
+        {/* Logo / full name — always links home */}
+        <div className="flex flex-col leading-none">
+          <NavLink
+            to="/"
+            aria-label={`${IDENTITY.fullName} — home`}
+            className="font-display text-xl font-bold tracking-tight text-text hover:text-[var(--accent)] transition-colors duration-200 whitespace-nowrap"
+          >
+            {IDENTITY.fullName}
+            <span className="ml-1.5 inline-block h-1.5 w-1.5 rounded-full align-middle" style={{ backgroundColor: 'var(--accent)' }} />
+          </NavLink>
+          {/* Easter egg nudge — desktop only, intentionally subtle */}
+          <p className="hidden md:block font-mono text-[10px] italic text-muted/40 select-none mt-0.5 tracking-wide" aria-hidden="true">
+            press <kbd className="not-italic font-mono border border-border/40 rounded px-0.5 text-muted/50">G</kbd> for a secret
+          </p>
+        </div>
 
         {/* Desktop links */}
         <nav aria-label="Main navigation" className="hidden md:flex items-center gap-6">
@@ -52,6 +61,7 @@ export default function Nav() {
             <NavLink
               key={href}
               to={href}
+              end={href === '/'}          // exact match for Home only
               style={({ isActive }) => isActive ? { color } : {}}
               className={({ isActive }) =>
                 `font-mono text-xs uppercase tracking-widest transition-colors duration-200 ${
@@ -88,6 +98,7 @@ export default function Nav() {
               <li key={href}>
                 <NavLink
                   to={href}
+                  end={href === '/'}
                   style={({ isActive }) => isActive ? { color } : {}}
                   className="block py-3 font-mono text-xs uppercase tracking-widest text-muted hover:text-text transition-colors"
                 >

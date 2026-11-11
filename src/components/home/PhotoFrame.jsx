@@ -75,7 +75,7 @@ export default function PhotoFrame() {
   }, [reduced])
 
   return (
-    <div className="relative flex items-center justify-center select-none" aria-label={`Photo of ${IDENTITY.name}`}>
+    <div className="relative flex items-center justify-center select-none" aria-label={`Photo of ${IDENTITY.fullName}`}>
 
       {/* Particle halo — 8 orbiting dots */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -115,7 +115,7 @@ export default function PhotoFrame() {
         <img
           ref={imgRef}
           src={IDENTITY.photo}
-          alt={`Photo of ${IDENTITY.name}`}
+          alt={`Photo of ${IDENTITY.fullName}`}
           className="w-full h-full object-cover object-top rounded-sm"
           draggable="false"
           loading="eager"

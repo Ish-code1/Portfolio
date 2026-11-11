@@ -170,7 +170,7 @@ export default function EasterEgg() {
       aria-modal="true"
       aria-label="Easter egg: hand landmark visualiser"
       className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
-      style={{ background: 'rgba(8,11,18,0.88)', backdropFilter: 'blur(8px)' }}
+      style={{ background: 'rgba(8,11,18,0.88)', backdropFilter: 'blur(8px)', cursor: 'auto' }}
       onClick={e => { if (e.target === e.currentTarget) dismiss() }}
     >
       <div
@@ -285,8 +285,8 @@ export default function EasterEgg() {
         </div>
 
         {/* Dismiss hint */}
-        <p className="font-mono text-2xs text-border">
-          Triggered by pressing <kbd className="border border-border rounded px-1 py-px text-muted">G</kbd> anywhere on the page · <kbd className="border border-border rounded px-1 py-px text-muted">Esc</kbd> to close
+        <p className="font-mono text-2xs text-slate-400">
+          Triggered by pressing <kbd className="border border-border rounded px-1 py-px text-slate-300">G</kbd> anywhere on the page · <kbd className="border border-border rounded px-1 py-px text-slate-300">Esc</kbd> to close
         </p>
       </div>
     </div>

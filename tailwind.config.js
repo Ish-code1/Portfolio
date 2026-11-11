@@ -13,7 +13,7 @@ export default {
         base:    '#080b12',
         surface: '#0d1117',
         border:  '#1a2235',
-        muted:   '#4a5568',
+        muted:   '#94a3b8',   // slate-400 (visible and accessible on dark background)
         text:    '#e2e8f0',
         // ── Domain accent palette ───────────────────
         aiml:    '#00e5ff',   // cyan
